@@ -1,5 +1,22 @@
 from django.db import models
 
+"""
+# Fill the db with random data
+import random, string
+
+
+def id_generator(size=4, chars=string.digits + string.ascii_lowercase + string.ascii_uppercase):
+    return "".join(random.choice(chars) for _ in range(size))
+
+for _ in range(1, 20):
+    rand_cust_id = id_generator(6)
+    obj = Customer.objects.create(name="Test_customer_{}".format(rand_cust_id),
+                                  short_name="cust_{}".format(rand_cust_id),
+                                  salesforce_id=id_generator(4, chars=string.digits)
+                                  )
+    obj.save()
+"""
+
 
 class Customer(models.Model):
 
@@ -11,7 +28,7 @@ class Customer(models.Model):
         db_table = "customers"
 
     def __str__(self):
-        return "{} : {}".format(self.name, self.cust_sf_id)
+        return "{} : {}".format(self.name, self.salesforce_id)
 
 
 class Appliance(models.Model):
