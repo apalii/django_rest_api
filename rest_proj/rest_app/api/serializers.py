@@ -21,3 +21,13 @@ class CustomerDetailSerializer(ModelSerializer):
             'short_name',
             'salesforce_id'
         ]
+
+
+class CustomerCreateUpdateSerializer(ModelSerializer):
+    class Meta:
+        model = Customer
+        fields = [
+            'name',
+            'short_name',
+            'salesforce_id'
+        ]
