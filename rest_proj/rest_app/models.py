@@ -42,14 +42,16 @@ class Appliance(models.Model):
         (u'u', u'unspecified')
     )
 
+    customer_id = models.ForeignKey(Customer)
     appliance_type = models.CharField(choices=TYPES, max_length=3, default='u')
-    appliance_customer = models.ForeignKey(Customer)
+    last_updated = models.DateTimeField(blank=True, null=True)
     ip_address = models.GenericIPAddressField(default="0.0.0.0")
+    notes = models.CharField(max_length=400, default="Write some notes here")
     is_active = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'appliances'
-        ordering = ['appliance_customer']
+        ordering = ['appliance_type']
 
     def __str__(self):
         return "{} : {} ({})".format(

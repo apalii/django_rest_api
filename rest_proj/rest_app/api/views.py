@@ -6,13 +6,22 @@ from rest_framework.generics import (
     DestroyAPIView,
 )
 
-from rest_app.models import Customer
-from .serializers import CustomerListSerializer, CustomerDetailSerializer, CustomerCreateUpdateSerializer
+from rest_framework.permissions import IsAdminUser
+
+from rest_app.models import Customer, Appliance
+
+from .serializers import (
+    CustomerListSerializer,
+    CustomerDetailSerializer,
+    CustomerCreateUpdateSerializer,
+    ApplianceSerializer,
+)
 
 
 class CustomerCreateAPIView(CreateAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerCreateUpdateSerializer
+    permission_classes = [IsAdminUser]
 
 
 class CustomerAPIView(ListAPIView):
@@ -28,11 +37,22 @@ class CustomerDetailAPIView(RetrieveAPIView):
 class CustomerUpdateAPIView(UpdateAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerCreateUpdateSerializer
+    permission_classes = [IsAdminUser]
 
 
 class CustomerDeleteAPIView(DestroyAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerDetailSerializer
+    permission_classes = [IsAdminUser]
+
+
+class CustomerApplianceList(ListAPIView):
+    queryset = Appliance.objects.all()
+    serializer_class = ApplianceSerializer
+
+    def get_queryset(self):
+        queryset = super(CustomerApplianceList, self).get_queryset()
+        return queryset.filter(customer_id=self.kwargs.get('id'))
 
 """
 from rest_app.api.serializers import CustomerDetailSerializer as cust_ser

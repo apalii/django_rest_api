@@ -15,6 +15,11 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -25,7 +30,7 @@ SECRET_KEY = 'rvh6#o#%r6&nkvev-&=lq$ax5o0qjvnc+q+m=_3lxebi(!55ia'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.84.12']
+ALLOWED_HOSTS = ['192.168.84.12', 'localhost', '127.0.0.1']
 
 
 # Application definition
