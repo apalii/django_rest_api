@@ -8,13 +8,15 @@ from rest_framework.generics import (
 
 from rest_framework.permissions import IsAdminUser
 
-from rest_app.models import Customer, Appliance
+from rest_app.models import Customer, Appliance, Status
 
 from .serializers import (
     CustomerListSerializer,
     CustomerDetailSerializer,
     CustomerCreateUpdateSerializer,
     ApplianceSerializer,
+    ApplianceDetailSerializer,
+    StatusListSerializer,
 )
 
 
@@ -53,6 +55,20 @@ class CustomerApplianceList(ListAPIView):
     def get_queryset(self):
         queryset = super(CustomerApplianceList, self).get_queryset()
         return queryset.filter(customer_id=self.kwargs.get('id'))
+
+
+class ApplianceDetailAPIView(RetrieveAPIView):
+    queryset = Appliance.objects.all()
+    serializer_class = ApplianceDetailSerializer
+
+
+class ApplianceStatusAPIView(ListAPIView):
+    queryset = Status.objects.all()
+    serializer_class = StatusListSerializer
+
+    def get_queryset(self):
+        queryset = super(ApplianceStatusAPIView, self).get_queryset()
+        return queryset.filter(appliance_id=self.kwargs.get('id'))
 
 """
 from rest_app.api.serializers import CustomerDetailSerializer as cust_ser

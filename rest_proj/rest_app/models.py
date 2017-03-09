@@ -42,7 +42,7 @@ class Appliance(models.Model):
         (u'u', u'unspecified')
     )
 
-    customer_id = models.ForeignKey(Customer)
+    customer_id = models.ForeignKey(Customer, on_delete=models.CASCADE)
     appliance_type = models.CharField(choices=TYPES, max_length=3, default='u')
     last_updated = models.DateTimeField(blank=True, null=True)
     ip_address = models.GenericIPAddressField(default="0.0.0.0")
@@ -59,3 +59,26 @@ class Appliance(models.Model):
             self.ip_address,
             "active" if self.is_active else "not active")
 
+
+class Status(models.Model):
+    """
+    CASCADE: When the referenced object is deleted,
+    also delete the objects that have references to it (When you remove a blog post for instance,
+    you might want to delete comments as well).
+    SQL equivalent: CASCADE.
+    """
+    appliance_id = models.ForeignKey(Appliance, on_delete=models.CASCADE)
+    cpu_usage = models.SmallIntegerField()
+    memory_usage = models.SmallIntegerField()
+    disk_usage = models.SmallIntegerField()
+    swap_usage = models.SmallIntegerField()
+    eps = models.SmallIntegerField()
+    version = models.CharField(max_length=10, default="unknown")
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'statuses'
+        ordering = ['appliance_id', 'timestamp']
+
+    def __str__(self):
+        return "Metrics on {}".format(self.timestamp)
