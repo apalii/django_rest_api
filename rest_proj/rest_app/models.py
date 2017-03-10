@@ -1,4 +1,10 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.conf import settings
+from django.dispatch import receiver
+
+from rest_framework.authtoken.models import Token
+
 
 """
 # Fill the db with random data
@@ -16,6 +22,17 @@ for _ in range(1, 20):
                                   )
     obj.save()
 """
+
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    """
+    We don’t want to manually create tokens for each new user, now,
+    every time a new user is saved in the database,
+    this function will run and a new Token will be created for that user.
+    """
+    if created:
+        Token.objects.create(user=instance)
 
 
 class Customer(models.Model):
