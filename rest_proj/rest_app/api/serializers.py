@@ -7,15 +7,7 @@ class CustomerListSerializer(ModelSerializer):
     class Meta:
         model = Customer
         fields = (
-            'url', 'id', 'name', 'short_name',
-        )
-
-
-class CustomerDetailSerializer(ModelSerializer):
-    class Meta:
-        model = Customer
-        fields = (
-            'id', 'name', 'short_name', 'salesforce_id'
+            'id', 'name', 'short_name',
         )
 
 

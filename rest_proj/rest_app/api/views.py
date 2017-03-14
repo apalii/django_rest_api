@@ -1,15 +1,13 @@
 from rest_framework.generics import (
     ListAPIView,
-    CreateAPIView,
     RetrieveAPIView,
-    UpdateAPIView,
-    DestroyAPIView,
 )
 
-from rest_framework.permissions import IsAdminUser
-
+from rest_framework.response import Response
+from rest_framework import viewsets
 from rest_app.models import Customer, Appliance, Status
 
+from .custom_permissions import IsAdminOrReadOnlyForAuthenticated
 from .serializers import (
     CustomerListSerializer,
     CustomerDetailSerializer,
@@ -20,32 +18,17 @@ from .serializers import (
 )
 
 
-class CustomerCreateAPIView(CreateAPIView):
+class CustomerViewSet(viewsets.ModelViewSet):
+    """A simple ViewSet for viewing and editing customers.
+    """
     queryset = Customer.objects.all()
     serializer_class = CustomerCreateUpdateSerializer
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminOrReadOnlyForAuthenticated]
 
-
-class CustomerAPIView(ListAPIView):
-    queryset = Customer.objects.all()
-    serializer_class = CustomerListSerializer
-
-
-class CustomerDetailAPIView(RetrieveAPIView):
-    queryset = Customer.objects.all()
-    serializer_class = CustomerDetailSerializer
-
-
-class CustomerUpdateAPIView(UpdateAPIView):
-    queryset = Customer.objects.all()
-    serializer_class = CustomerCreateUpdateSerializer
-    permission_classes = [IsAdminUser]
-
-
-class CustomerDeleteAPIView(DestroyAPIView):
-    queryset = Customer.objects.all()
-    serializer_class = CustomerDetailSerializer
-    permission_classes = [IsAdminUser]
+    def list(self, request):
+        queryset = Customer.objects.all()
+        serializer = CustomerListSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class CustomerApplianceList(ListAPIView):
@@ -53,8 +36,8 @@ class CustomerApplianceList(ListAPIView):
     serializer_class = ApplianceSerializer
 
     def get_queryset(self):
-        queryset = super(CustomerApplianceList, self).get_queryset()
-        return queryset.filter(customer_id=self.kwargs.get('id'))
+        queryset = super().get_queryset()
+        return queryset.filter(customer_id=self.kwargs.get('pk'))
 
 
 class ApplianceDetailAPIView(RetrieveAPIView):
@@ -67,7 +50,7 @@ class ApplianceStatusAPIView(ListAPIView):
     serializer_class = StatusListSerializer
 
     def get_queryset(self):
-        queryset = super(ApplianceStatusAPIView, self).get_queryset()
+        queryset = super().get_queryset()
         return queryset.filter(appliance_id=self.kwargs.get('id'))
 
 """

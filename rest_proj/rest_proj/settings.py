@@ -19,9 +19,8 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
     ),
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ],
+    # 'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
+    # 'DEFAULT_RENDERER_CLASSES': ('rest_framework.renderers.JSONRenderer',),
 }
 
 # Quick-start development settings - unsuitable for production
@@ -33,7 +32,7 @@ SECRET_KEY = 'rvh6#o#%r6&nkvev-&=lq$ax5o0qjvnc+q+m=_3lxebi(!55ia'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.84.12', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['104.155.123.216', 'palii.pp.ua', '192.168.84.12', 'localhost', '127.0.0.1']
 
 
 # Application definition

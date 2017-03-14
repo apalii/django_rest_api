@@ -27,7 +27,7 @@ for _ in range(1, 20):
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     """
-    We don’t want to manually create tokens for each new user, now,
+    We dont want to manually create tokens for each new user, now,
     every time a new user is saved in the database,
     this function will run and a new Token will be created for that user.
     """
