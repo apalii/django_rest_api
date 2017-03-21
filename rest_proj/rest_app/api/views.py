@@ -10,7 +10,6 @@ from rest_app.models import Customer, Appliance, Status
 from .custom_permissions import IsAdminOrReadOnlyForAuthenticated
 from .serializers import (
     CustomerListSerializer,
-    CustomerDetailSerializer,
     CustomerCreateUpdateSerializer,
     ApplianceSerializer,
     ApplianceDetailSerializer,
@@ -23,7 +22,7 @@ class CustomerViewSet(viewsets.ModelViewSet):
     """
     queryset = Customer.objects.all()
     serializer_class = CustomerCreateUpdateSerializer
-    permission_classes = [IsAdminOrReadOnlyForAuthenticated]
+    # permission_classes = [IsAdminOrReadOnlyForAuthenticated]
 
     def list(self, request):
         queryset = Customer.objects.all()
