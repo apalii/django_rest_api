@@ -7,3 +7,5 @@ packaging==16.8
 pyparsing==2.2.0
 requests==2.13.0
 six==1.10.0
+ipaddress==1.0.18
+python-decouple==3.0

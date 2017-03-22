@@ -13,8 +13,13 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
+from decouple import config
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+SUPERVISOR_ROOT = os.path.abspath(PROJECT_ROOT + "/..")
+GIT_ROOT = os.path.abspath(PROJECT_ROOT + "/../..")
+
 
 REST_FRAMEWORK = {
     # 'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework.authentication.TokenAuthentication',),
@@ -26,12 +31,13 @@ REST_FRAMEWORK = {
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'rvh6#o#%r6&nkvev-&=lq$ax5o0qjvnc+q+m=_3lxebi(!55ia'
+SECRET_KEY = config('SECRET')
+GITHUB_WEBHOOK_KEY = config('GWK')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [config('HOSTS')]
 
 
 # Application definition
