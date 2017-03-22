@@ -17,7 +17,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'github_webhook', 'rest_app.views.github_webhook'),
+    url(r'^github_webhook/$', 'rest_app.views.github_webhook'),
 ]
 
 # API
