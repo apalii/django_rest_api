@@ -53,12 +53,13 @@ def github_webhook(request):
     elif event == 'push':
         # Deploy some code for example
 
-        cmd = "cd {}; git pull;".format(settings.GIT_ROOT)
-        cmd += "{}/bin/supervisorctl restart gunicorn".format(
-            settings.GIT_ROOT, settings.PROJECT_ROOT
+        cmd_git_pull = "cd {}; git pull;".format(settings.GIT_ROOT)
+        cmd_gunicorn_restart = "cd {}; {}/bin/supervisorctl restart gunicorn".format(
+            settings.PROJECT_ROOT, settings.GIT_ROOT
         )
-        output = subprocess.check_output(cmd, shell=True, stderr=subprocess.STDOUT)
-        return HttpResponse(cmd + " " + output)
+        output_1 = subprocess.check_output(cmd_git_pull, shell=True, stderr=subprocess.STDOUT)
+        output_2 = subprocess.check_output(cmd_gunicorn_restart, shell=True, stderr=subprocess.STDOUT)
+        return HttpResponse(output_1 + " " + output_2)
 
         # In case we receive an event that's not ping or push
 
