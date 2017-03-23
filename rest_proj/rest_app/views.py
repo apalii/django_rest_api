@@ -55,11 +55,11 @@ def github_webhook(request):
 
         cmd_git_pull = "cd {}; git pull;".format(settings.GIT_ROOT)
         cmd_gunicorn_restart = "cd {}; {}/bin/supervisorctl restart gunicorn".format(
-            settings.PROJECT_ROOT, settings.GIT_ROOT
+            settings.SUPERVISOR_ROOT, settings.GIT_ROOT
         )
         output_1 = subprocess.check_output(cmd_git_pull, shell=True, stderr=subprocess.STDOUT)
         output_2 = subprocess.check_output(cmd_gunicorn_restart, shell=True, stderr=subprocess.STDOUT)
-        return HttpResponse(output_1 + " " + output_2)
+        return HttpResponse(output_1 + " | " + cmd_gunicorn_restart + " : " + output_2)
 
         # In case we receive an event that's not ping or push
 
