@@ -54,7 +54,7 @@ def github_webhook(request):
         # Deploy some code for example
 
         cmd = "cd {}; git pull;".format(settings.GIT_ROOT)
-        cmd += "{}/bin/supervisorctl restart gunicorn > /dev/null 2>&1".format(
+        cmd += "{}/bin/supervisorctl restart gunicorn".format(
             settings.GIT_ROOT, settings.PROJECT_ROOT
         )
         output = subprocess.check_output(cmd, shell=True, stderr=subprocess.STDOUT)
