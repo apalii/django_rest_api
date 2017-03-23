@@ -57,7 +57,7 @@ def github_webhook(request):
         cmd += "{}/bin/supervisorctl restart gunicorn > /dev/null 2>&1".format(
             settings.GIT_ROOT, settings.PROJECT_ROOT
         )
-        output = subprocess.check_output(cmd, shell=True)
+        output = subprocess.check_output(cmd, shell=True, stderr=subprocess.STDOUT)
         return HttpResponse('success')
 
         # In case we receive an event that's not ping or push
