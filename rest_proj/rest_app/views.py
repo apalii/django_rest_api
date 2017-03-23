@@ -55,6 +55,8 @@ def github_webhook(request):
             settings.GIT_ROOT, settings.PROJECT_ROOT
         )
         print(cmd)
+        output = subprocess.check_output(cmd, shell=True)
+        print(output)
         return HttpResponse('success')
 
         # In case we receive an event that's not ping or push
