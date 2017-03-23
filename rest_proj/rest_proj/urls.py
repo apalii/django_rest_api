@@ -16,6 +16,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
+    url(r'^$', 'rest_app.views.index_page'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^github_webhook/$', 'rest_app.views.github_webhook'),
 ]

@@ -12,6 +12,10 @@ import requests
 from ipaddress import ip_address, ip_network
 
 
+def index_page(request):
+    return HttpResponse("What are you looking here ?")
+
+
 @csrf_exempt
 @require_POST
 def github_webhook(request):
