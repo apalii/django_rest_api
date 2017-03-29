@@ -45,7 +45,7 @@ class Customer(models.Model):
         db_table = "customers"
 
     def __str__(self):
-        return "{} : {}".format(self.name, self.salesforce_id)
+        return "{} : {}".format(self.name, self.pk)
 
 
 class Appliance(models.Model):
@@ -59,7 +59,7 @@ class Appliance(models.Model):
         (u'u', u'unspecified')
     )
 
-    customer_id = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    customer_id = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='appliances')
     appliance_type = models.CharField(choices=TYPES, max_length=3, default='u')
     last_updated = models.DateTimeField(blank=True, null=True)
     ip_address = models.GenericIPAddressField(default="0.0.0.0")

@@ -6,7 +6,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from .views import (
     CustomerViewSet,
     CustomerApplianceList,
-    ApplianceDetailAPIView,
+    ApplianceDetailViewSet,
     ApplianceStatusAPIView,
 )
 
@@ -21,7 +21,10 @@ urlpatterns = [
 # Appliances
 urlpatterns += [
     url(r'^customer/(?P<pk>\d+)/appliance/$', CustomerApplianceList.as_view(), name='appliance-list'),
-    url(r'^customer/\d+/appliance/(?P<pk>\d+)/$', ApplianceDetailAPIView.as_view(), name='appliance-detail'),
+    url(r'^customer/\d+/appliance/(?P<pk>\d+)/$',
+        ApplianceDetailViewSet.as_view({'get': 'retrieve',
+                                        'put': 'update',
+                                        'delete': 'destroy'}), name='appliance-detail'),
 ]
 
 # Statuses

@@ -1,6 +1,7 @@
+from django.shortcuts import get_object_or_404
 from rest_framework.generics import (
     ListAPIView,
-    RetrieveAPIView,
+    ListCreateAPIView,
 )
 
 from rest_framework.response import Response
@@ -26,22 +27,28 @@ class CustomerViewSet(viewsets.ModelViewSet):
 
     def list(self, request):
         queryset = Customer.objects.all()
-        serializer = CustomerListSerializer(queryset, many=True)
+        serializer = CustomerListSerializer(queryset, many=True, context={'request': request})
         return Response(serializer.data)
 
 
-class CustomerApplianceList(ListAPIView):
+class CustomerApplianceList(ListCreateAPIView):
     queryset = Appliance.objects.all()
-    serializer_class = ApplianceSerializer
+    serializer_class = ApplianceDetailSerializer
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = super(CustomerApplianceList, self).get_queryset()
         return queryset.filter(customer_id=self.kwargs.get('pk'))
 
 
-class ApplianceDetailAPIView(RetrieveAPIView):
+class ApplianceDetailViewSet(viewsets.ModelViewSet):
     queryset = Appliance.objects.all()
     serializer_class = ApplianceDetailSerializer
+
+    def retrieve(self, request, pk=None):
+        queryset = Appliance.objects.all()
+        appliance = get_object_or_404(queryset, pk=pk)
+        serializer = ApplianceDetailSerializer(appliance)
+        return Response(serializer.data)
 
 
 class ApplianceStatusAPIView(ListAPIView):
@@ -49,7 +56,7 @@ class ApplianceStatusAPIView(ListAPIView):
     serializer_class = StatusListSerializer
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = super(ApplianceStatusAPIView, self).get_queryset()
         return queryset.filter(appliance_id=self.kwargs.get('id'))
 
 """

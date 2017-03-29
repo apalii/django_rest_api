@@ -13,7 +13,7 @@ from ipaddress import ip_address, ip_network
 
 
 def index_page(request):
-    return HttpResponse("<h1>What are you looking here ???</h1>")
+    return HttpResponse("<h2>test</h2>")
 
 
 @csrf_exempt
