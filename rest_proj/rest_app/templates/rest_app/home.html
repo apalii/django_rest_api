@@ -1,0 +1,27 @@
+{% load staticfiles %}
+
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css"
+              href="{% static "rest_app/css/some.css" %}" >
+    </head>
+    <body ng-app="rest_app.demo">
+        {% verbatim %}
+        <div ng-controller="RestAPpController">
+            <div class="list" ng-repeat="list in data">
+                <h3>{{ list.name }}</h3>
+
+
+                <div class="flex">
+                    <input type="text" ng-model="new_title" />
+                    <button ng-click="add(list, new_title)">+</button>
+                </div>
+            </div>
+        </div>
+        {% endverbatim %}
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular.min.js"></script>
+        <script src="{% static "rest_app/some.js" %}"></script>
+        <script src="{% static "rest_app/some.directive.js" %}"></script>
+    </body>
+</html>

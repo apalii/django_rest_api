@@ -12,14 +12,9 @@ import requests
 from ipaddress import ip_address, ip_network
 
 
-def index_page(request):
-    return HttpResponse("<h2>test</h2>")
-
-
 @csrf_exempt
 @require_POST
 def github_webhook(request):
-    print(request.META)
     forwarded_for = u'{}'.format(request.META.get('HTTP_X_FORWARDED_FOR'))
     client_ip_address = ip_address(forwarded_for)
     whitelist = requests.get('https://api.github.com/meta').json()['hooks']

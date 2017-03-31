@@ -14,9 +14,10 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.views.generic import TemplateView
 
 urlpatterns = [
-    url(r'^$', 'rest_app.views.index_page'),
+    url(r'^$', TemplateView.as_view(template_name="rest_app/home.html")),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^github_webhook/$', 'rest_app.views.github_webhook'),
 ]
