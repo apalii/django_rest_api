@@ -2,18 +2,33 @@ import hmac
 from hashlib import sha1
 import subprocess
 
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST, require_safe, require_GET
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, HttpResponseForbidden, HttpResponseServerError
 from django.conf import settings
 from django.utils.encoding import force_bytes
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+
+from rest_app.models import Customer
 
 import requests
 from ipaddress import ip_address, ip_network
 
 
-@csrf_exempt
+@require_GET
+@login_required
+def customers(request):
+    customers_all = Customer.objects.all()
+    context = {
+        'customers': customers_all,
+        'user': request.user
+    }
+    return render(request, 'customers.html', context)
+
+
 @require_POST
+@csrf_exempt
 def github_webhook(request):
     forwarded_for = u'{}'.format(request.META.get('HTTP_X_FORWARDED_FOR'))
     client_ip_address = ip_address(forwarded_for)

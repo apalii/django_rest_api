@@ -23,6 +23,11 @@ GIT_ROOT = os.path.abspath(PROJECT_ROOT + "/../..")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
+# Auth
+LOGIN_URL = '/login'
+LOGOUT_URL = '/logout'
+LOGIN_REDIRECT_URL = '/monitor/customers'
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET')
 GITHUB_WEBHOOK_KEY = config('GWK')

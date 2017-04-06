@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Customers{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>some text here</h1>
+    {% if user.is_authenticated %}
+      Hi {{ user.username }}!
+      <a href="{% url 'logout' %}">logout</a>
+    {% else %}
+      <a href="{% url 'login' %}">login</a>
+    {% endif %}
+  </header><br><br>
+    {% for cust in customers %}
+        {{ cust.name }}   -   {{ cust.short_name }}  -   {{ cust.id }}<br>
+
+    {% endfor %}
+
+{% endblock %}

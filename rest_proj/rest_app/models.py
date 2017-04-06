@@ -60,6 +60,7 @@ class Appliance(models.Model):
     )
 
     customer_id = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='appliances')
+    uniq_uuid = models.CharField(max_length=36)
     appliance_type = models.CharField(choices=TYPES, max_length=3, default='u')
     last_updated = models.DateTimeField(blank=True, null=True)
     ip_address = models.GenericIPAddressField(default="0.0.0.0")
