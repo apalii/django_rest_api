@@ -60,11 +60,11 @@ class Appliance(models.Model):
     )
 
     customer_id = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='appliances')
-    uniq_uuid = models.CharField(max_length=36)
+    uniq_uuid = models.CharField(max_length=36, default='')
     appliance_type = models.CharField(choices=TYPES, max_length=3, default='u')
-    last_updated = models.DateTimeField(blank=True, null=True)
+    last_updated = models.DateTimeField(auto_now_add=True)
     ip_address = models.GenericIPAddressField(default="0.0.0.0")
-    notes = models.CharField(max_length=400, default="Write some notes here")
+    notes = models.CharField(max_length=400, default="Write some notes here...")
     is_active = models.BooleanField(default=False)
 
     class Meta:
@@ -86,12 +86,12 @@ class Status(models.Model):
     SQL equivalent: CASCADE.
     """
     appliance_id = models.ForeignKey(Appliance, on_delete=models.CASCADE)
-    cpu_usage = models.SmallIntegerField()
-    memory_usage = models.SmallIntegerField()
-    disk_usage = models.SmallIntegerField()
-    swap_usage = models.SmallIntegerField()
-    eps = models.SmallIntegerField()
-    version = models.CharField(max_length=10, default="unknown")
+    cpu_usage = models.PositiveSmallIntegerField()
+    memory_usage = models.PositiveSmallIntegerField()
+    disk_usage = models.PositiveSmallIntegerField()
+    swap_usage = models.PositiveSmallIntegerField()
+    eps = models.PositiveSmallIntegerField()
+    version = models.CharField(max_length=6, default="unknown")
     timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:

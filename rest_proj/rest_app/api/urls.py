@@ -8,6 +8,7 @@ from .views import (
     CustomerApplianceList,
     ApplianceDetailViewSet,
     ApplianceStatusAPIView,
+    StatusHandler
 )
 
 # Customers
@@ -28,8 +29,10 @@ urlpatterns += [
 ]
 
 # Statuses
+# TODO Create more accurate regex for uuid
 urlpatterns += [
     url(r'^customer/\d+/appliance/(?P<id>\d+)/status/$', ApplianceStatusAPIView.as_view(), name='status-list'),
+    url(r'^status/(?P<uuid>[\w-]{36})/$', StatusHandler.as_view(), name='status-list'),
 ]
 
 # Auth

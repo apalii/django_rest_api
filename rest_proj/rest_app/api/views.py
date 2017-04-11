@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.generics import (
     ListAPIView,
     ListCreateAPIView,
+    CreateAPIView
 )
 
 from rest_framework.response import Response
@@ -15,6 +16,7 @@ from .serializers import (
     ApplianceSerializer,
     ApplianceDetailSerializer,
     StatusListSerializer,
+    StatusSerializer
 )
 
 
@@ -57,7 +59,17 @@ class ApplianceStatusAPIView(ListAPIView):
 
     def get_queryset(self):
         queryset = super(ApplianceStatusAPIView, self).get_queryset()
-        return queryset.filter(appliance_id=self.kwargs.get('id'))
+        return queryset.filter(appliance_id=self.kwargs.get('id')).order_by('-timestamp')
+
+
+class StatusHandler(CreateAPIView):
+    queryset = Status.objects.all()
+    serializer_class = StatusSerializer
+
+    def get_queryset(self):
+        queryset = super(StatusHandler, self).get_queryset()
+        appliance = Appliance.objects.get(uniq_uuid=self.kwargs.get('uuid'))
+        return queryset.filter(appliance_id=appliance.id)
 
 """
 from rest_app.api.serializers import CustomerDetailSerializer as cust_ser

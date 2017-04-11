@@ -45,3 +45,9 @@ class StatusListSerializer(ModelSerializer):
     class Meta:
         model = Status
         fields = '__all__'
+
+
+class StatusSerializer(ModelSerializer):
+    class Meta:
+        model = Status
+        exclude = ('id',)
