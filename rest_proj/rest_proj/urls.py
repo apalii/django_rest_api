@@ -15,19 +15,17 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import TemplateView
-from django.contrib.auth import views as auth_views
+from django.views.decorators.csrf import ensure_csrf_cookie
+
+from rest_framework_jwt.views import obtain_jwt_token
+
 
 urlpatterns = [
-    url(r'^$', TemplateView.as_view(template_name="rest_app/home.html")),
+    url(r'^$', ensure_csrf_cookie(TemplateView.as_view(template_name="rest_app/home.html"))),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^github_webhook/$', 'rest_app.views.github_webhook'),
 ]
 
-# Django auth
-urlpatterns += [
-    url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
-    url(r'^logout/$', auth_views.logout, {'next_page': '/login'}, name='logout'),
-]
 
 # Monitor
 urlpatterns += [
@@ -36,5 +34,6 @@ urlpatterns += [
 
 # API
 urlpatterns += [
+    url(r'^api/v0/auth/$', obtain_jwt_token),
     url(r'^api/v0/', include("rest_app.api.urls", namespace='rest-api')),
 ]

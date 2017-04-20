@@ -1,11 +1,14 @@
 appdirs==1.4.3
 Django==1.8.18
+django-cors-headers==2.0.2
 django-filter==1.0.1
 djangorestframework==3.6.2
+djangorestframework-jwt==1.10.0
+ipaddress==1.0.18
 Markdown==2.6.8
 packaging==16.8
+PyJWT==1.4.2
 pyparsing==2.2.0
+python-decouple==3.0
 requests==2.13.0
 six==1.10.0
-ipaddress==1.0.18
-python-decouple==3.0

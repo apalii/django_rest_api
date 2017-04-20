@@ -1,6 +1,5 @@
 from django.conf.urls import url
 
-from rest_framework.authtoken import views as rest_framework_views
 from rest_framework.urlpatterns import format_suffix_patterns
 
 from .views import (
@@ -32,12 +31,7 @@ urlpatterns += [
 # TODO Create more accurate regex for uuid
 urlpatterns += [
     url(r'^customer/\d+/appliance/(?P<id>\d+)/status/$', ApplianceStatusAPIView.as_view(), name='status-list'),
-    url(r'^status/(?P<uuid>[\w-]{36})/$', StatusHandler.as_view(), name='status-list'),
-]
-
-# Auth
-urlpatterns += [
-    url(r'^get_auth_token/$', rest_framework_views.obtain_auth_token, name='get-auth-token'),
+    url(r'^status/(?P<uuid>[\w-]{36})/$', StatusHandler.as_view(), name='status-handler'),
 ]
 
 # Format suffixes
