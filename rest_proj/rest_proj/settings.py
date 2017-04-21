@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import datetime
 
 from decouple import config
 
@@ -42,7 +43,6 @@ if not DEBUG:
             'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
             'rest_framework.authentication.SessionAuthentication',
             'rest_framework.authentication.BasicAuthentication',
-            # 'rest_framework.authentication.TokenAuthentication',
         ),
         'DEFAULT_PERMISSION_CLASSES': (
             'rest_framework.permissions.IsAuthenticated',
@@ -51,6 +51,13 @@ if not DEBUG:
             'rest_framework.renderers.JSONRenderer',
         ),
     }
+
+# 60 seconds * minutes
+token_expiration = 60 * 60
+
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=token_expiration),
+}
 
 ALLOWED_HOSTS = [config('HOSTS')]
 
