@@ -24,17 +24,6 @@ for _ in range(1, 20):
 """
 
 
-@receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def create_auth_token(sender, instance=None, created=False, **kwargs):
-    """
-    We dont want to manually create tokens for each new user, now,
-    every time a new user is saved in the database,
-    this function will run and a new Token will be created for that user.
-    """
-    if created:
-        Token.objects.create(user=instance)
-
-
 class Customer(models.Model):
 
     name = models.CharField(max_length=100)
