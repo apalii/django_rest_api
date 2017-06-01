@@ -81,6 +81,9 @@ class Status(models.Model):
     class Meta:
         db_table = 'statuses'
         ordering = ['appliance_id', 'timestamp']
+        index_together = [
+            ['appliance_id', 'timestamp']
+        ]
 
     def __str__(self):
         return "Metrics on {}".format(self.timestamp)
