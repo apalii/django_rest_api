@@ -2,7 +2,7 @@ appdirs==1.4.3
 django>=1.11.19
 django-cors-headers==2.0.2
 django-filter==1.0.1
-djangorestframework==3.6.2
+djangorestframework==3.9
 djangorestframework-jwt==1.10.0
 ipaddress==1.0.18
 Markdown==2.6.8
